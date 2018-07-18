@@ -1,4 +1,5 @@
 <?php
+namespace Illuminate\Database\Migrations\Migration;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,7 +14,7 @@ class AddPostTypeToCommentsTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasColumn('comments', 'post_type')) {
+        if (Schema::hasColumn('comments', 'post_type')) {
         } else {
             Schema::table('comments', function (Blueprint $table) {
                 $table->string('post_type')->nullable();
