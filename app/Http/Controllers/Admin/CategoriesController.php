@@ -38,9 +38,9 @@ class CategoriesController extends Controller
      */
     public function store(CategoryFormRequest $request)
     {
-        $category = new Category(array(
+        $category = new Category([
             'name' => $request->get('name'),
-        ));
+        ]);
         $category->save();
         return redirect('/admin/categories/create')->with('status', 'A new category has been created!');
     }

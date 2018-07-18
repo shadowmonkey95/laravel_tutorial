@@ -30,26 +30,20 @@ class TicketsController extends Controller
         return view('tickets.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(TicketFormRequest $request)
     {
         $slug = uniqid();
-        $ticket = new Ticket(array(
+        $ticket = new Ticket([
             'title' => $request->get('title'),
             'content' => $request->get('content'),
-            'slug' => $slug
-        ));
+            'slug' => $slug,
+        ]);
 
         $ticket->save();
 
-        $data = array(
+        $data = [
             'ticket' => $slug,
-        );
+        ];
 
         Mail::send('emails.ticket', $data, function ($message) {
             $message->from('pham.dinh.vu@framgia.com', 'Learning Laravel');
@@ -63,7 +57,7 @@ class TicketsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
@@ -76,7 +70,7 @@ class TicketsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
     public function edit($slug)
@@ -87,31 +81,25 @@ class TicketsController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update($slug, TicketFormRequest $request)
     {
         $ticket = Ticket::whereSlug($slug)->firstOrFail();
         $ticket->title = $request->get('title');
         $ticket->content = $request->get('content');
-        if($request->get('status') != null) {
+        if ($request->get('status') != null) {
             $ticket->status = 0;
         } else {
             $ticket->status = 1;
         }
         $ticket->save();
-        return redirect(action('TicketsController@edit', $ticket->slug))->with('status', 'The ticket '.$slug.' has been updated!');
+        return redirect(action('TicketsController@edit', $ticket->slug))->
+        with('status', 'The ticket '.$slug.' has been updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
     public function destroy($slug)

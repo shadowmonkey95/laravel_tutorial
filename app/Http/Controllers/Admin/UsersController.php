@@ -31,7 +31,7 @@ class UsersController extends Controller
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $password = $request->get('password');
-        if ($password != "") {
+        if ($password != '') {
             $user->password = Hash::make($password);
         }
         $user->save();

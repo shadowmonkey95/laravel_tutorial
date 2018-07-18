@@ -14,7 +14,7 @@ class Ticket extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function  getTitle()
+    public function getTitle()
     {
         return $this->title;
     }

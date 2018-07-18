@@ -9,12 +9,11 @@ class Manager
 {
     public function handle($request, Closure $next)
     {
-        if(!Auth::check()) {
+        if (!Auth::check()) {
             return redirect('users/login');
         } else {
             $user = Auth::user();
-            if($user->hasRole('manager'))
-            {
+            if ($user->hasRole('manager')) {
                 return $next($request);
             } else {
                 return redirect('/');

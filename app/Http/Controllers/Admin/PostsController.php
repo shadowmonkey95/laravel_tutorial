@@ -43,13 +43,13 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = Auth::user()->id;
-        $post= new Post(array(
+        $userId = Auth::user()->id;
+        $post= new Post([
             'title' => $request->get('title'),
             'content' => $request->get('content'),
             'slug' => Str::slug($request->get('title'), '-'),
-            'user_id' => $user_id
-        ));
+            'user_id' => $userId,
+        ]);
         $post->save();
         $post->categories()->sync($request->get('categories'));
         return redirect('/admin/posts/create')->with('status', 'The post has been created!');
@@ -80,13 +80,6 @@ class PostsController extends Controller
         return view('backend.posts.edit', compact('post', 'categories', 'selectedCategories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update($id, PostEditFormRequest $request)
     {
         $post = Post::whereId($id)->firstOrFail();

@@ -42,7 +42,7 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
