@@ -17,14 +17,14 @@ Route::get('/contact', 'TicketsController@create');
 Route::post('/contact', 'TicketsController@store');
 Route::get('/tickets', 'TicketsController@index');
 Route::get('/ticket/{slug?}', 'TicketsController@show');
-Route::get('/ticket/{slug?}/edit','TicketsController@edit');
-Route::post('/ticket/{slug?}/edit','TicketsController@update');
-Route::post('/ticket/{slug?}/delete','TicketsController@destroy');
+Route::get('/ticket/{slug?}/edit', 'TicketsController@edit');
+Route::post('/ticket/{slug?}/edit', 'TicketsController@update');
+Route::post('/ticket/{slug?}/delete', 'TicketsController@destroy');
 Route::post('/comment', 'CommentsController@newComment');
 Route::get('users/register', 'Auth\RegisterController@showRegistrationForm');
 Route::post('users/register', 'Auth\RegisterController@register');
 Route::get('users/logout', 'Auth\LoginController@logout');
-Route::get('users/login', 'Auth\LoginController@showLoginForm')->name('login');;
+Route::get('users/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('users/login', 'Auth\LoginController@login');
 Route::group(array('prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'manager'), function () {
     Route::get('/', 'PagesController@home');
@@ -33,13 +33,13 @@ Route::group(array('prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 
     Route::get('roles/create', 'RolesController@create');
     Route::post('roles/create', 'RolesController@store');
     Route::get('users/{id?}/edit', 'UsersController@edit');
-    Route::post('users/{id?}/edit','UsersController@update');
+    Route::post('users/{id?}/edit', 'UsersController@update');
 
     Route::get('posts', 'PostsController@index');
     Route::get('posts/create', 'PostsController@create');
     Route::post('posts/create', 'PostsController@store');
     Route::get('posts/{id?}/edit', 'PostsController@edit');
-    Route::post('posts/{id?}/edit','PostsController@update');
+    Route::post('posts/{id?}/edit', 'PostsController@update');
 
     Route::get('categories', 'CategoriesController@index');
     Route::get('categories/create', 'CategoriesController@create');
@@ -51,19 +51,18 @@ Route::get('/blog/{slug?}', 'BlogController@show');
 
 
 Route::get('sendemail', function () {
-
-    $data = array(
-        'name' => "Learning Laravel",
-    );
+    $data = [
+        'name' => 'Learning Laravel',
+    ];
 
     Mail::send('emails.welcome', $data, function ($message) {
-
         $message->from('pham.dinh.vu@framgia.com', 'Learning Laravel');
 
         $message->to('pham.dinh.vu@framgia.com')->subject('Learning Laravel test email');
-
     });
 
-    return "Your email has been sent successfully";
-
+    return 'Your email has been sent successfully';
 });
+
+
+Auth::routes();
